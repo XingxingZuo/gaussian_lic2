@@ -1,0 +1,392 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="description" content="Gaussian-LIC2: LiDAR-Inertial-Camera Gaussian Splatting SLAM">
+    <meta name="keywords" content="Photo-Realistic SLAM, 3D Gaussian Splatting, LiDAR-Inertial-Camera Fusion">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Gaussian-LIC2: LiDAR-Inertial-Camera Gaussian Splatting SLAM</title>
+      <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-L6PYDPEBZZ"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+
+      gtag('js', new Date());
+
+      gtag('config', 'G-L6PYDPEBZZ');
+    </script>
+    <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+    <link rel="stylesheet" href="./static/css/bulma.min.css">
+    <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+    <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+    <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+    <link rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+    <link rel="stylesheet" href="./static/css/index.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script defer src="./static/js/fontawesome.all.min.js"></script>
+    <script src="./static/js/bulma-carousel.min.js"></script>
+    <script src="./static/js/bulma-slider.min.js"></script>
+    <script src="./static/js/index.js"></script>
+    <script src="./static/js/video_comparison.js"></script>
+  </head>
+  <body>
+
+  <nav class="navbar" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+      <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </a>
+    </div>
+    <div class="navbar-menu">
+      <div class="navbar-start" style="flex-grow: 1; justify-content: center;">
+        <a class="navbar-item" href="https://xingxingzuo.github.io">
+        <span class="icon">
+            <i class="fas fa-home"></i>
+        </span>
+        </a>
+
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link">
+            More Research
+          </a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="https://xingxingzuo.github.io/flying_co_stereo">
+              Flying Co-Stereo
+            </a>
+            <a class="navbar-item" href="https://xingxingzuo.github.io/gaussian_lic">
+              Gaussian-LIC
+            </a>
+            <a class="navbar-item" href="https://xingxingzuo.github.io/fmgs">
+              FMGS
+            </a>
+            <a class="navbar-item" href="https://yingyexin.github.io/simplemapping.html">
+              SimpleMapping
+            </a>
+            <a class="navbar-item" href="https://shengyuh.github.io/dynfl">
+              DyNFL
+            <a class="navbar-item" href="https://xingxingzuo.github.io/nerfvo">
+              NerfVO
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </nav>
+    <section class="hero">
+      <div class="hero-body">
+        <div class="container is-max-desktop">
+          <div class="columns is-centered">
+            <div class="column has-text-centered">
+              <h1 class="title is-1 publication-title">Gaussian-LIC2: LiDAR-Inertial-Camera Gaussian Splatting SLAM
+              </h1>
+              <div class="is-size-5 publication-authors">
+                <span class="author-block">
+                <a href="https://github.com/Jerry-locker/" target="_blank">Xiaolei Lang</a><sup>1,*</sup>,</span>
+                <span class="author-block">
+                <a href="https://github.com/icameling" target="_blank">Jiajun Lv</a><sup>1,*</sup>,</span>
+                <span class="author-block">
+                <a href="https://scholar.google.com/citations?user=XSO6aT0AAAAJ&hl=zh-CN&oi=sra" target="_blank">Kai Tang</a><sup>1</sup>,</span>
+                <span class="author-block">
+                <a href="https://github.com/yzdad/" target="_blank">Laijian Li</a><sup>1</sup>,</span>
+                <span class="author-block">
+                <a href="https://github.com/hjxwhy" target="_blank">Jianxin Huang</a><sup>1</sup>,</span>
+                <span class="author-block">
+                <a href="https://scholar.google.com/citations?user=Mozc1JEAAAAJ&hl=zh-CN&oi=ao" target="_blank">Lina Liu</a><sup>1</sup>,</span>
+                <span class="author-block">
+                <a href="https://scholar.google.com/citations?user=qYcgBbEAAAAJ&hl=zh-CN" target="_blank">Yong Liu</a><sup>1,#</sup>,</span>
+                <span class="author-block">
+                <a href="https://xingxingzuo.github.io/" target="_blank">Xingxing Zuo</a><sup>2,#</sup>
+                </span>
+              </div>
+              <div class="column is-full_width">
+                <h2 class="is-size-6">* Equal Contribution</h2>
+                <h2 class="is-size-6"># Corresponding Author</h2>
+              <!-- <h2 class="is-size-6">(* equal contribution)  (<span>&#8224;</span> corresponding author)</h2> -->
+            </div>
+              <div class="is-size-5 publication-authors">
+                <!-- <span class="author-block"><sup>*</sup>Equal Contribution</span>
+                <span class="author-block"><sup>#</sup>Corresponding Author</span> -->
+                <span class="author-block"><sup>1</sup>Institute of Cyber-Systems and Control, Zhejiang University,</span>
+                <span class="author-block"><sup>2</sup>Department of Robotics, Mohamed Bin Zayed University of Artificial Intelligence (MBZUAI)</span>
+              </div>
+              <div class="column has-text-centered">
+                <div class="publication-links">
+                  <span class="link-block">
+                  <a href="https://arxiv.org/pdf/2404.06926"
+                    class="external-link button is-normal is-rounded is-dark" target="_blank">
+                  <span class="icon">
+                  <i class="fas fa-file-pdf"></i>
+                  </span>
+                  <span>Paper</span>
+                  </a>
+                  </span>
+                  <span class="link-block">
+                  <a href="https://arxiv.org/abs/2404.06926v2" class="external-link button is-normal is-rounded is-dark"
+                    target="_blank">
+                  <span class="icon">
+                  <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                  </a>
+                  </span>
+                  <span class="link-block">
+                  <a href="https://www.youtube.com/watch?v=SkPnpuCfh88"
+                    class="external-link button is-normal is-rounded is-dark" target="_blank">
+                  <span class="icon">
+                  <i class="fas fa-video"></i>
+                  </span>
+                  <span>Video</span>
+                  </a>
+                  </span>
+                  <span class="link-block">
+                  <a href="https://xingxingzuo.github.io/gaussian_lic2"
+                    class="external-link button is-normal is-rounded is-dark is-static" style="opacity: 0.5; cursor: not-allowed;" title="Coming Soon">
+                  <span class="icon">
+                  <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code</span>
+                  </a>
+                  </span>
+                  <span class="link-block">
+                  <a href=""
+                    class="external-link button is-normal is-rounded is-dark is-static" style="opacity: 0.5; cursor: not-allowed;" title="Coming Soon">
+                  <span class="icon">
+                  <i class="fas fa-cube"></i>
+                  </span>
+                  <span>Dataset</span>
+                  </a>
+                  </span>
+                </div>
+              </div>
+              <div class="column has-text-centered" style="margin-top: 5px;">
+                <img src="./static/images/gif1.gif" alt="Overview Image" style="max-width: 100%; height: auto;">
+                <img src="./static/images/gif2.gif" alt="Overview Image" style="max-width: 100%; height: auto;">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="section">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered has-text-centered">
+          <div class="column is-four-fifths">
+            <div class="notification has-text-weight-bold mb-6" 
+               style="background: linear-gradient(135deg, #f5f9ff 0%, #e1edff 100%);
+                      border-left: 4px solid #002D72; font-size: 0.92rem;">
+            <div class="is-flex is-align-items-center">
+              <span class="icon is-large mr-3" style="color: #0072CE;">
+                <i class="fas fa-bolt"></i>
+              </span>
+              <div>
+                <strong style="color: #002D72;">TL;DR:</strong> 
+                <span style="display: inline; white-space: normal; color: #333;">
+                  This work introduces <strong style="color: #002D72;">Gaussian-LIC2</strong>, 
+                  the first photo-realistic LiDAR-Inertial-Camera Gaussian SLAM system that jointly considers visual quality, geometric accuracy, and real-time performance.
+                </span>
+              </div>
+            </div>
+            </div>
+
+
+            <h2 class="title is-3">Abstract</h2>
+            <div class="content has-text-justified">
+              <p>
+                This paper presents the first photo-realistic LiDAR-Inertial-Camera Gaussian SLAM system that jointly considers visual quality, geometric accuracy, and real-time performance. Our method performs robust and accurate pose tracking using a continuous-time LiDAR-Inertial-Camera odometry, while incrementally reconstructing a 3D Gaussian map from camera and LiDAR data. The resulting map supports high-quality, real-time novel-view rendering of both RGB and depth images. To effectively address under-reconstruction in regions not covered by the LiDAR, we employ a lightweight zero-shot depth model that synergistically combines RGB appearance cues with sparse
+                LiDAR measurements to generate dense depth maps. The depth completion enables reliable Gaussian initialization in LiDAR-blind areas, significantly improving system applicability for sparse LiDAR sensors.
+                To enhance geometric accuracy, we fully make use of sparse but precise LiDAR depths to supervise Gaussian map optimization and accelerate it with carefully designed CUDA-accelerated strategies. Furthermore, we explore how the incrementally reconstructed Gaussian map can improve the robustness of odometry. By tightly incorporating photometric constraints from the Gaussian map into the continuous-time factor graph optimization, we demonstrate improved pose estimation under LiDAR degradation scenarios.
+                We also showcase downstream applications via extending our elaborate system, including video frame interpolation and fast 3D mesh extraction.
+                To support rigorous evaluation, we construct a dedicated LiDAR-Inertial-Camera dataset featuring ground-truth poses, depth maps, and extrapolated trajectories for assessing out-of-sequence novel view synthesis. Extensive experiments on both public and self-collected datasets demonstrate the superiority and versatility of our system across LiDAR sensors with varying sampling densities. Both the dataset and code will be made publicly available.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="section">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered has-text-centered">
+          <div class="column is-full-width">
+            <h2 class="title is-3" style="margin-top: -30px">Pipeline</h2>
+            <img src="./static/images/pipeline.png" class="center">
+            <div class="content has-text-justified">
+              <p style="margin-top: 30px">
+                Two main modules: a continuous-time tightly-coupled LiDAR-Inertial-Camera Odometry and an incremental photo-realistic mapping back-end with 3DGS. First, we design a tightly-coupled LiDAR-Inertial-Camera odometry system as the front-end which supports two optional camera factors tightly fused within a continuous-time factor graph, including constraints from the Gaussian map. 
+                Second, we utilize an efficient but generalizable depth model to fully initialize Gaussians and prepare mapping data for the back-end. 
+                Third, we perform photo-realistic mapping with depth regularization and CUDA-related acceleration.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="section">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered has-text-centered">
+          <div class="column is-full-width">
+            <h2 class="title is-3" style="margin-top: -30px">In-Sequence RGB & Depth Novel View Synthesis</h2>
+            <img src="./static/images/gif3.gif" class="center" style="width:85%; height:auto;">
+            <img src="./static/images/gif4.gif" class="center" style="width:85%; height:auto;">
+            <div class="content has-text-justified">
+              <p style="margin-top: 10px">
+                
+              </p>
+            </div>
+            <img src="./static/images/gif5.gif" class="center" style="width:50%; height:auto;">
+            <div class="content has-text-justified">
+              <p style="margin-top: 0px">
+                <!-- <b>Overview of the system outputs</b> (ordered left to right, top to bottom): (1) reconstructed map comprised of 3D Gaussians, (2) RGB image rendered from a novel viewpoint, (3) sparse LiDAR point cloud map, (4) depth map rendered from the novel viewpoint, and (5) 3D mesh extracted from the Gaussian map. -->
+              </p>
+            </div>
+            <!-- <img src="./static/images/out-of-seq.png" class="center">
+            <div class="content has-text-justified">
+              <p style="margin-top: 10px">
+                <b>Qualitative results of RGB and depth rendering (out-of-sequence novel view) on our self-collected dataset.</b> (a-d) The green path represents the trajectory for collecting training views, the red path shows the out-of-sequence trajectory for evaluation, and the yellow stars indicate the selected out-of-sequence novel views. The sky regions in rendered depth maps are masked in black.
+              </p>
+            </div>
+            <h2 class="title is-3" style="margin-top: -1px">Applications</h2>
+            <img src="./static/images/video.png" class="center">
+            <div class="content has-text-justified">
+              <p style="margin-top: 10px">
+                <b>Application - Video Frame Interpolation</b>: The images in the middle are the interpolated frames at the intermediate timestamps of the left and right images.
+              </p>
+            </div>
+            <img src="./static/images/mesh.png" class="center">
+            <div class="content has-text-justified">
+              <p style="margin-top: 10px">
+                <b>Application - 3D Mesh Extraction</b>: Textured and normal-colorized meshes generated from our reconstructed Gaussian map.
+              </p>
+            </div> -->
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="section">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered has-text-centered">
+          <div class="column is-full-width">
+            <h2 class="title is-3" style="margin-top: -30px">Out-of-Sequence RGB & Depth Novel View Synthesis</h2>
+            <!-- <img src="./static/images/setup.png" class="center" style="width:70%; height:auto;">
+            <div class="content has-text-justified">
+              <p style="margin-top: 10px">
+                Two types of LiDAR-Inertial-Camera sensor rig for self-collected dataset.
+              </p>
+            </div>
+            <img src="./static/images/teaser.png" class="center" style="width:70%; height:auto;">
+            <div class="content has-text-justified">
+              <p style="margin-top: 10px">
+                <b>Overview of the system outputs</b> (ordered left to right, top to bottom): (1) reconstructed map comprised of 3D Gaussians, (2) RGB image rendered from a novel viewpoint, (3) sparse LiDAR point cloud map, (4) depth map rendered from the novel viewpoint, and (5) 3D mesh extracted from the Gaussian map.
+              </p>
+            </div> -->
+            <img src="./static/images/out-of-seq.png" class="center">
+            <div class="content has-text-justified">
+              <p style="margin-top: 10px">
+                <b>Qualitative results of RGB and depth rendering (out-of-sequence novel view) on our self-collected dataset.</b> (a-d) The green path represents the trajectory for collecting training views, the red path shows the out-of-sequence trajectory for evaluation, and the yellow stars indicate the selected out-of-sequence novel views. The sky regions in rendered depth maps are masked in black.
+              </p>
+            </div>
+            <!-- <h2 class="title is-3" style="margin-top: -1px">Applications</h2>
+            <img src="./static/images/video.png" class="center">
+            <div class="content has-text-justified">
+              <p style="margin-top: 10px">
+                <b>Application - Video Frame Interpolation</b>: The images in the middle are the interpolated frames at the intermediate timestamps of the left and right images.
+              </p>
+            </div>
+            <img src="./static/images/mesh.png" class="center">
+            <div class="content has-text-justified">
+              <p style="margin-top: 10px">
+                <b>Application - 3D Mesh Extraction</b>: Textured and normal-colorized meshes generated from our reconstructed Gaussian map.
+              </p>
+            </div> -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered has-text-centered">
+          <div class="column is-full-width">
+            <h2 class="title is-3" style="margin-top: -30px">Applications</h2>
+            <!-- <img src="./static/images/setup.png" class="center" style="width:70%; height:auto;">
+            <div class="content has-text-justified">
+              <p style="margin-top: 10px">
+                Two types of LiDAR-Inertial-Camera sensor rig for self-collected dataset.
+              </p>
+            </div> -->
+            <!-- <img src="./static/images/teaser.png" class="center" style="width:70%; height:auto;">
+            <div class="content has-text-justified">
+              <p style="margin-top: 10px">
+                <b>Overview of the system outputs</b> (ordered left to right, top to bottom): (1) reconstructed map comprised of 3D Gaussians, (2) RGB image rendered from a novel viewpoint, (3) sparse LiDAR point cloud map, (4) depth map rendered from the novel viewpoint, and (5) 3D mesh extracted from the Gaussian map.
+              </p>
+            </div> -->
+            <!-- <img src="./static/images/out-of-seq.png" class="center">
+            <div class="content has-text-justified">
+              <p style="margin-top: 10px">
+                <b>Qualitative results of RGB and depth rendering (out-of-sequence novel view) on our self-collected dataset.</b> (a-d) The green path represents the trajectory for collecting training views, the red path shows the out-of-sequence trajectory for evaluation, and the yellow stars indicate the selected out-of-sequence novel views. The sky regions in rendered depth maps are masked in black.
+              </p>
+            </div> -->
+            <!-- <h2 class="title is-3" style="margin-top: -1px">Applications</h2> -->
+            <img src="./static/images/video.png" class="center">
+            <div class="content has-text-justified">
+              <p style="margin-top: 10px">
+                <b>Application1 - Video Frame Interpolation</b>: The images in the middle are the interpolated frames at the intermediate timestamps of the left and right images, benefiting from the spatiotemporal capabilities of the continuous-time trajectory and 3DGS.
+              </p>
+            </div>
+            <div class="content has-text-justified">
+              <p style="margin-top: 30px">
+                
+              </p>
+            </div>
+            <img src="./static/images/gif6.gif" class="center">
+            <img src="./static/images/gif7.gif" class="center">
+            <!-- <img src="./static/images/mesh.png" class="center"> -->
+            <div class="content has-text-justified">
+              <p style="margin-top: 10px">
+                <b>Application2 - Rapid 3D Mesh Extraction</b>: Normal-colorized mesh generated from the Gaussian map reconstructed in real time.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="section" id="BibTeX">
+      <div class="container is-max-desktop content">
+        <h2 class="title">BibTeX</h2>
+        <pre><code>@article{lang2025gaussian,
+  author={Xiaolei Lang, Jiajun Lv, Kai Tang, Laijian Li, Jianxin Huang, Lina Liu, Yong Liu, Xingxing Zuo},
+  journal={arXiv preprint arXiv:2404.06926}, 
+  title={Gaussian-LIC2: LiDAR-Inertial-Camera Gaussian Splatting SLAM}, 
+  year={2025}
+}</code></pre>
+      </div>
+    </section>
+    <footer class="footer">
+      <div class="container">
+        <div class="columns is-centered">
+          <div class="column is-8">
+            <div class="content">
+              <p>
+                This website is licensed under a <a rel="license"
+                  href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
+                Commons Attribution-ShareAlike 4.0 International License</a>.
+              </p>
+              <p>
+                This website template is from <a href="https://github.com/nerfies/nerfies.github.io">Nerfies</a>. 
+                We sincerely thank <a href="https://keunhong.com/">Keunhong Park</a> for developing and open-sourcing this template. 
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -7,7 +7,7 @@ If you find Gaussian-LIC2 useful for your work please cite:
 Coming_soon...
 @article{lang2025gaussian2,
 title     = {Gaussian-LIC2: LiDAR-Inertial-Camera Gaussian Splatting SLAM},
-author    = {Xiaolei Lang, Jiajun Lv, Kai Tang, Laijian Li, Jianxin Huang, Lina Liu, Yong Liu, Xingxing Zuo},
+author    = {Lang, Xiaolei and Lv, Jiajun and Tang, Kai and Li, Laijian and Huang, Jianxin and Liu, Lina and Liu, Yong and Zuo, Xingxing},
 journal   = {arXiv},
 year      = {2025},
 }

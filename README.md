@@ -5,9 +5,9 @@ This is the project webpage for the [Gaussian-LIC2 website](https://xingxingzuo.
 If you find Gaussian-LIC2 useful for your work please cite:
 ```
 Coming_soon...
-@article{lang2025gslic2,
-author    = {Xiaolei Lang, Jiajun Lv, Kai Tang, Laijian Li, Jianxin Huang, Lina Liu, Yong Liu, Xingxing Zuo},
+@article{lang2025gaussian2,
 title     = {Gaussian-LIC2: LiDAR-Inertial-Camera Gaussian Splatting SLAM},
+author    = {Xiaolei Lang, Jiajun Lv, Kai Tang, Laijian Li, Jianxin Huang, Lina Liu, Yong Liu, Xingxing Zuo},
 journal   = {arXiv},
 year      = {2025},
 }
